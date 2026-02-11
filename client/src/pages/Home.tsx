@@ -207,11 +207,13 @@ export default function Home() {
       <section id="pricing" className="py-12 bg-background scroll-mt-20">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-3xl font-heading font-bold text-primary mb-4">EPC Assessment Pricing for Hampshire Properties</h2>
+            <h2 className="text-3xl md:text-3xl font-heading font-bold text-primary mb-4">Domestic EPC Assessment Property Pricing</h2>
             <p className="text-muted-foreground text-lg">
-              Competitive rates with no hidden fees.
+              Professional service with competitive rates.
               <br />
               Promptly receive your Energy Performance Certificate
+              <br />
+              Properties outside of the Southampton post code area may incur a travel and fuel cost fee.
             </p>
           </div>
           

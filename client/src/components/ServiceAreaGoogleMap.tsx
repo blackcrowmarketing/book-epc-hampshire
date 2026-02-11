@@ -158,7 +158,7 @@ export default function ServiceAreaGoogleMap() {
           <div>
             <h3 className="font-heading font-bold text-lg text-primary mb-3">Extended Coverage</h3>
             <p className="text-muted-foreground">
-              We also serve other areas of Hampshire including Winchester, Basingstoke, Farnborough, and surrounding regions. Travel charges may apply depending on distance from Southampton.
+              We serve all areas of Hampshire; travel charges may apply depending on the distance from Southampton.
             </p>
           </div>
         </div>
