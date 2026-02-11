@@ -94,7 +94,7 @@ export default function Home() {
               </div>
               
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-heading font-bold text-primary leading-tight">
-                Professional <span className="text-chart-1">EPC Services</span> in Southampton
+                Professional <span className="text-chart-1">Energy Performance Certificate (EPC)</span> Services in Hampshire
               </h1>
               
               <p className="text-lg text-muted-foreground max-w-lg">
@@ -174,8 +174,8 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-2/3 space-y-6">
-              <h2 className="text-3xl md:text-3xl font-heading font-bold text-primary">Meet Your Assessor</h2>
-              <h3 className="text-xl font-semibold text-chart-4">Hilary Webb - Qualified EPC Provider</h3>
+              <h2 className="text-3xl md:text-3xl font-heading font-bold text-primary">Meet Your Hampshire EPC Assessor</h2>
+              <h3 className="text-xl font-semibold text-chart-4">Hilary Webb - Qualified Energy Performance Certificate Provider</h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 I am a fully qualified and accredited Energy Assessor based in Southampton, covering the entire Hampshire area. With years of experience in the property industry, I provide a professional, friendly, and efficient service to help you get your Energy Performance Certificate quickly and hassle-free.
               </p>
@@ -207,7 +207,7 @@ export default function Home() {
       <section id="pricing" className="py-12 bg-background scroll-mt-20">
         <div className="container">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-3xl font-heading font-bold text-primary mb-4">Transparent Pricing</h2>
+            <h2 className="text-3xl md:text-3xl font-heading font-bold text-primary mb-4">EPC Assessment Pricing for Hampshire Properties</h2>
             <p className="text-muted-foreground text-lg">
               Competitive rates with no hidden fees.
               <br />
@@ -375,7 +375,7 @@ export default function Home() {
       <section className="py-12 bg-background">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-3xl font-heading font-bold text-primary mb-4">EPC Guide & Resources</h2>
+            <h2 className="text-3xl md:text-3xl font-heading font-bold text-primary mb-4">Energy Performance Certificate Guide & Resources</h2>
             <p className="text-muted-foreground text-lg">
               Understanding your Energy Performance Certificate is important. View the official government guide below.
             </p>
@@ -426,7 +426,7 @@ export default function Home() {
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              <h2 className="text-3xl md:text-3xl font-heading font-bold mb-6">Get in Touch</h2>
+              <h2 className="text-3xl md:text-3xl font-heading font-bold mb-6">Book Your Hampshire EPC Assessment</h2>
               <p className="text-primary-foreground/80 text-lg mb-8">
                 Ready to book your EPC assessment or have a question? Fill out the form or contact me directly using the details below.
               </p>

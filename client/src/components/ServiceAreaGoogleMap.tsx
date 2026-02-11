@@ -80,7 +80,7 @@ export default function ServiceAreaGoogleMap() {
     <section className="py-20 bg-background" id="service-area">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-4xl font-heading font-bold text-primary mb-4">Service Coverage Area</h2>
+          <h2 className="text-4xl font-heading font-bold text-primary mb-4">EPC Service Coverage Across Hampshire</h2>
           <p className="text-lg text-muted-foreground">
             We provide EPC assessments throughout Hampshire. Southampton postcode area is included in our standard pricing.
           </p>
