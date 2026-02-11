@@ -577,43 +577,38 @@ export default function Home() {
               We provide fast, reliable EPC services to homeowners, landlords, and estate agents across the region.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 text-sm text-muted-foreground">
-              <div className="text-center p-2">EPC Southampton</div>
-              <div className="text-center p-2">EPC Totton</div>
-              <div className="text-center p-2">EPC Lyndhurst</div>
-              <div className="text-center p-2">EPC Romsey</div>
-              <div className="text-center p-2">EPC Eastleigh</div>
-              <div className="text-center p-2">EPC Hedge End</div>
-              <div className="text-center p-2">EPC Locks Heath</div>
-              <div className="text-center p-2">EPC Hythe</div>
-              <div className="text-center p-2">EPC Beaulieu</div>
-              <div className="text-center p-2">EPC Lymington</div>
-              <div className="text-center p-2">EPC Chandlers Ford</div>
-              <div className="text-center p-2">EPC Bishops Waltham</div>
-              <div className="text-center p-2">EPC Winchester</div>
-              <div className="text-center p-2">EPC Stockbridge</div>
-              <div className="text-center p-2">EPC Shirley</div>
-              <div className="text-center p-2">EPC Millbrook</div>
-              <div className="text-center p-2">EPC New Forest</div>
-              <div className="text-center p-2">EPC Ashurst</div>
-              <div className="text-center p-2">EPC Brockenhurst</div>
-              <div className="text-center p-2">EPC Bursledon</div>
-              <div className="text-center p-2">EPC Cadnam</div>
-              <div className="text-center p-2">EPC Chilworth</div>
-              <div className="text-center p-2">EPC Holbury</div>
-              <div className="text-center p-2">EPC Dibden Purlieu</div>
-              <div className="text-center p-2">EPC Marchwood</div>
-              <div className="text-center p-2">EPC Nursling</div>
-              <div className="text-center p-2">EPC Rownhams</div>
-              <div className="text-center p-2">EPC Shedfield</div>
-              <div className="text-center p-2">EPC West End</div>
-              <div className="text-center p-2">EPC West Wellow</div>
-              <div className="text-center p-2">EPC Woodlands</div>
+              <div className="text-left p-2">EPC Southampton</div>
+              <div className="text-left p-2">EPC Totton</div>
+              <div className="text-left p-2">EPC Lyndhurst</div>
+              <div className="text-left p-2">EPC Romsey</div>
+              <div className="text-left p-2">EPC Eastleigh</div>
+              <div className="text-left p-2">EPC Hedge End</div>
+              <div className="text-left p-2">EPC Locks Heath</div>
+              <div className="text-left p-2">EPC Hythe</div>
+              <div className="text-left p-2">EPC Beaulieu</div>
+              <div className="text-left p-2">EPC Lymington</div>
+              <div className="text-left p-2">EPC Chandlers Ford</div>
+              <div className="text-left p-2">EPC Bishops Waltham</div>
+              <div className="text-left p-2">EPC Winchester</div>
+              <div className="text-left p-2">EPC Stockbridge</div>
+              <div className="text-left p-2">EPC Shirley</div>
+              <div className="text-left p-2">EPC Millbrook</div>
+              <div className="text-left p-2">EPC New Forest</div>
+              <div className="text-left p-2">EPC Ashurst</div>
+              <div className="text-left p-2">EPC Brockenhurst</div>
+              <div className="text-left p-2">EPC Bursledon</div>
+              <div className="text-left p-2">EPC Cadnam</div>
+              <div className="text-left p-2">EPC Chilworth</div>
+              <div className="text-left p-2">EPC Holbury</div>
+              <div className="text-left p-2">EPC Dibden Purlieu</div>
+              <div className="text-left p-2">EPC Marchwood</div>
+              <div className="text-left p-2">EPC Nursling</div>
+              <div className="text-left p-2">EPC Rownhams</div>
+              <div className="text-left p-2">EPC Shedfield</div>
+              <div className="text-left p-2">EPC West End</div>
+              <div className="text-left p-2">EPC West Wellow</div>
+              <div className="text-left p-2">EPC Woodlands</div>
             </div>
-            <p className="text-xs text-muted-foreground text-center mt-6">
-              Looking for Energy Performance Certificate services in your area? Contact us for fast, professional EPC assessments 
-              in Southampton, Totton, Romsey, Eastleigh, Winchester, New Forest, and throughout Hampshire. Qualified assessor providing 
-              domestic and commercial EPC certificates with same-day or next-day service available.
-            </p>
           </div>
         </div>
       </section>
