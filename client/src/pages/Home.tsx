@@ -107,25 +107,7 @@ export default function Home() {
                 </Button>
               </div>
               
-              <div className="flex items-center gap-6 pt-4">
-                <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="w-10 h-10 rounded-full border-2 border-background bg-muted flex items-center justify-center overflow-hidden">
-                      <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${i}`} alt="Avatar" />
-                    </div>
-                  ))}
-                </div>
-                <div className="text-sm">
-                  <div className="flex text-yellow-500">
-                    <Star className="w-4 h-4 fill-current" />
-                    <Star className="w-4 h-4 fill-current" />
-                    <Star className="w-4 h-4 fill-current" />
-                    <Star className="w-4 h-4 fill-current" />
-                    <Star className="w-4 h-4 fill-current" />
-                  </div>
-                  <p className="text-muted-foreground">Trusted by local homeowners</p>
-                </div>
-              </div>
+
             </div>
             
             <div className="relative h-full min-h-[400px] lg:min-h-[600px] animate-in slide-in-from-right-10 duration-700 delay-200">

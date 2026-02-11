@@ -134,6 +134,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           
           <div className="border-t border-primary-foreground/20 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/60">
             <p>&copy; {new Date().getFullYear()} Book EPC Hampshire. All rights reserved.</p>
+            <p>Designed and Powered by <a href="https://blackcrowmarketing.co.uk" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground transition-colors">Black Crow Marketing Ltd</a></p>
           </div>
         </div>
       </footer>
