@@ -105,9 +105,6 @@ export default function Home() {
                 <Button size="lg" className="bg-chart-1 hover:bg-chart-4 text-primary-foreground font-bold text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1" onClick={() => document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' })}>
                   REQUEST CALLBACK
                 </Button>
-                <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/5 font-bold text-lg px-8 py-6">
-                  View Services
-                </Button>
               </div>
               
               <div className="flex items-center gap-6 pt-4">
@@ -566,6 +563,57 @@ export default function Home() {
                 </p>
               </form>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Location Content - Optimized for local search */}
+      <section className="py-8 bg-muted/30">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-heading font-bold text-primary mb-6 text-center">EPC Services Across Hampshire</h2>
+            <p className="text-muted-foreground text-center mb-8">
+              Professional Energy Performance Certificate assessments available throughout Hampshire and surrounding areas. 
+              We provide fast, reliable EPC services to homeowners, landlords, and estate agents across the region.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 text-sm text-muted-foreground">
+              <div className="text-center p-2">EPC Southampton</div>
+              <div className="text-center p-2">EPC Totton</div>
+              <div className="text-center p-2">EPC Lyndhurst</div>
+              <div className="text-center p-2">EPC Romsey</div>
+              <div className="text-center p-2">EPC Eastleigh</div>
+              <div className="text-center p-2">EPC Hedge End</div>
+              <div className="text-center p-2">EPC Locks Heath</div>
+              <div className="text-center p-2">EPC Hythe</div>
+              <div className="text-center p-2">EPC Beaulieu</div>
+              <div className="text-center p-2">EPC Lymington</div>
+              <div className="text-center p-2">EPC Chandlers Ford</div>
+              <div className="text-center p-2">EPC Bishops Waltham</div>
+              <div className="text-center p-2">EPC Winchester</div>
+              <div className="text-center p-2">EPC Stockbridge</div>
+              <div className="text-center p-2">EPC Shirley</div>
+              <div className="text-center p-2">EPC Millbrook</div>
+              <div className="text-center p-2">EPC New Forest</div>
+              <div className="text-center p-2">EPC Ashurst</div>
+              <div className="text-center p-2">EPC Brockenhurst</div>
+              <div className="text-center p-2">EPC Bursledon</div>
+              <div className="text-center p-2">EPC Cadnam</div>
+              <div className="text-center p-2">EPC Chilworth</div>
+              <div className="text-center p-2">EPC Holbury</div>
+              <div className="text-center p-2">EPC Dibden Purlieu</div>
+              <div className="text-center p-2">EPC Marchwood</div>
+              <div className="text-center p-2">EPC Nursling</div>
+              <div className="text-center p-2">EPC Rownhams</div>
+              <div className="text-center p-2">EPC Shedfield</div>
+              <div className="text-center p-2">EPC West End</div>
+              <div className="text-center p-2">EPC West Wellow</div>
+              <div className="text-center p-2">EPC Woodlands</div>
+            </div>
+            <p className="text-xs text-muted-foreground text-center mt-6">
+              Looking for Energy Performance Certificate services in your area? Contact us for fast, professional EPC assessments 
+              in Southampton, Totton, Romsey, Eastleigh, Winchester, New Forest, and throughout Hampshire. Qualified assessor providing 
+              domestic and commercial EPC certificates with same-day or next-day service available.
+            </p>
           </div>
         </div>
       </section>
