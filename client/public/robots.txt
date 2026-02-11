@@ -1,0 +1,7 @@
+# robots.txt for book-epc-hampshire.co.uk
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://book-epc-hampshire.co.uk/sitemap.xml
