@@ -1,0 +1,127 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      GETRESPONSE_API_KEY: ${{ secrets.GETRESPONSE_API_KEY }}
+      GETRESPONSE_LIST_TOKEN: ${{ secrets.GETRESPONSE_LIST_TOKEN }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+      OAUTH_SERVER_URL: ${{ secrets.OAUTH_SERVER_URL }}
+      VITE_OAUTH_PORTAL_URL: ${{ secrets.VITE_OAUTH_PORTAL_URL }}
+      VITE_APP_ID: ${{ secrets.VITE_APP_ID }}
+      OWNER_OPEN_ID: ${{ secrets.OWNER_OPEN_ID }}
+      BUILT_IN_FORGE_API_URL: ${{ secrets.BUILT_IN_FORGE_API_URL }}
+      BUILT_IN_FORGE_API_KEY: ${{ secrets.BUILT_IN_FORGE_API_KEY }}
+      SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+      
+      - name: Install pnpm
+        run: npm install -g pnpm@10.4.1
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build application
+        run: pnpm run build
+      
+      - name: Copy files to deployment directory
+        run: |
+          sudo mkdir -p /var/www/book-epc-hampshire
+          sudo rm -rf /var/www/book-epc-hampshire/public
+          sudo rm -f /var/www/book-epc-hampshire/index.js
+          sudo cp -r dist/* /var/www/book-epc-hampshire/
+          sudo cp package.json /var/www/book-epc-hampshire/
+          sudo rm -rf /var/www/book-epc-hampshire/node_modules
+          sudo cp -r node_modules /var/www/book-epc-hampshire/
+      
+      - name: Create/Update .env file
+        run: |
+          sudo tee /var/www/book-epc-hampshire/.env > /dev/null <<EOF
+          NODE_ENV=production
+          PORT=3004
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          GETRESPONSE_API_KEY=${{ secrets.GETRESPONSE_API_KEY }}
+          GETRESPONSE_LIST_TOKEN=${{ secrets.GETRESPONSE_LIST_TOKEN }}
+          STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          OAUTH_SERVER_URL=${{ secrets.OAUTH_SERVER_URL }}
+          VITE_OAUTH_PORTAL_URL=${{ secrets.VITE_OAUTH_PORTAL_URL }}
+          VITE_APP_ID=${{ secrets.VITE_APP_ID }}
+          OWNER_OPEN_ID=${{ secrets.OWNER_OPEN_ID }}
+          BUILT_IN_FORGE_API_URL=${{ secrets.BUILT_IN_FORGE_API_URL }}
+          BUILT_IN_FORGE_API_KEY=${{ secrets.BUILT_IN_FORGE_API_KEY }}
+          SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
+          EOF
+      
+      - name: Update Nginx configuration
+        continue-on-error: false
+        run: |
+          sudo tee /etc/nginx/sites-available/bookepchampshire.co.uk > /dev/null <<'NGINX_EOF'
+          server {
+              listen 80;
+              server_name bookepchampshire.co.uk www.bookepchampshire.co.uk;
+              return 301 https://$server_name$request_uri;
+          }
+
+          server {
+              listen 443 ssl http2;
+              server_name bookepchampshire.co.uk www.bookepchampshire.co.uk;
+
+              ssl_certificate /etc/ssl/certs/bookepchampshire.co.uk.pem;
+              ssl_certificate_key /etc/ssl/private/bookepchampshire.co.uk.key;
+
+              root /var/www/book-epc-hampshire/public;
+              index index.html;
+
+              # Enable React Router client-side routing
+              location / {
+                  try_files $uri $uri/ /index.html;
+              }
+
+              # Proxy API requests to Node.js backend
+              location /api {
+                  proxy_pass http://localhost:3004;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection 'upgrade';
+                  proxy_set_header Host $host;
+                  proxy_cache_bypass $http_upgrade;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+              }
+          }
+          NGINX_EOF
+          
+          echo "Testing Nginx configuration..."
+          sudo nginx -t
+          echo "Reloading Nginx..."
+          sudo systemctl reload nginx
+      
+      - name: Restart PM2
+        run: |
+          cd /var/www/book-epc-hampshire
+          pm2 delete book-epc-hampshire || true
+          pm2 start index.js --name book-epc-hampshire --node-args="--env-file=.env"
+          pm2 save
+          pm2 list
