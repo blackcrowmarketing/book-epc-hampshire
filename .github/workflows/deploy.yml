@@ -45,19 +45,29 @@ jobs:
       
       - name: Copy files to deployment directory
         run: |
-          sudo mkdir -p /var/www/book-epc-hampshire
-          sudo rm -rf /var/www/book-epc-hampshire/public
-          sudo rm -f /var/www/book-epc-hampshire/index.js
-          sudo cp -r dist/* /var/www/book-epc-hampshire/
-          sudo cp package.json /var/www/book-epc-hampshire/
-          sudo rm -rf /var/www/book-epc-hampshire/node_modules
-          sudo cp -r node_modules /var/www/book-epc-hampshire/
+          # Define target directory
+          TARGET_DIR="/home/ubuntu/book-epc-hampshire"
+          
+          # Ensure target directory exists
+          mkdir -p $TARGET_DIR
+          
+          # Clean up old build artifacts
+          rm -rf $TARGET_DIR/dist
+          rm -rf $TARGET_DIR/node_modules
+          
+          # Copy new build artifacts
+          cp -r dist $TARGET_DIR/
+          cp package.json $TARGET_DIR/
+          cp -r node_modules $TARGET_DIR/
+          cp -r server $TARGET_DIR/ || true
+          cp -r shared $TARGET_DIR/ || true
       
       - name: Create/Update .env file
         run: |
-          sudo tee /var/www/book-epc-hampshire/.env > /dev/null <<EOF
+          TARGET_DIR="/home/ubuntu/book-epc-hampshire"
+          tee $TARGET_DIR/.env > /dev/null <<EOF
           NODE_ENV=production
-          PORT=3004
+          PORT=3009
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           JWT_SECRET=${{ secrets.JWT_SECRET }}
           GETRESPONSE_API_KEY=${{ secrets.GETRESPONSE_API_KEY }}
@@ -73,55 +83,12 @@ jobs:
           SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
           EOF
       
-      - name: Update Nginx configuration
-        continue-on-error: false
-        run: |
-          sudo tee /etc/nginx/sites-available/bookepchampshire.co.uk > /dev/null <<'NGINX_EOF'
-          server {
-              listen 80;
-              server_name bookepchampshire.co.uk www.bookepchampshire.co.uk;
-              return 301 https://$server_name$request_uri;
-          }
-
-          server {
-              listen 443 ssl http2;
-              server_name bookepchampshire.co.uk www.bookepchampshire.co.uk;
-
-              ssl_certificate /etc/ssl/certs/bookepchampshire.co.uk.pem;
-              ssl_certificate_key /etc/ssl/private/bookepchampshire.co.uk.key;
-
-              root /var/www/book-epc-hampshire/public;
-              index index.html;
-
-              # Enable React Router client-side routing
-              location / {
-                  try_files $uri $uri/ /index.html;
-              }
-
-              # Proxy API requests to Node.js backend
-              location /api {
-                  proxy_pass http://localhost:3004;
-                  proxy_http_version 1.1;
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection 'upgrade';
-                  proxy_set_header Host $host;
-                  proxy_cache_bypass $http_upgrade;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
-              }
-          }
-          NGINX_EOF
-          
-          echo "Testing Nginx configuration..."
-          sudo nginx -t
-          echo "Reloading Nginx..."
-          sudo systemctl reload nginx
-      
       - name: Restart PM2
         run: |
-          cd /var/www/book-epc-hampshire
-          pm2 delete book-epc-hampshire || true
-          pm2 start index.js --name book-epc-hampshire --node-args="--env-file=.env"
+          cd /home/ubuntu/book-epc-hampshire
+          # Ensure PM2 is in path
+          export PATH=$PATH:/home/ubuntu/.nvm/versions/node/v22.13.0/bin
+          
+          # Restart the process
+          pm2 restart book-epc-hampshire || pm2 start npm --name "book-epc-hampshire" -- run start
           pm2 save
-          pm2 list
