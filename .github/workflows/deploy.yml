@@ -1,94 +1,17 @@
-name: Deploy to VPS
+name: Trigger Fleet Deployment
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
-    runs-on: self-hosted
-    
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      GETRESPONSE_API_KEY: ${{ secrets.GETRESPONSE_API_KEY }}
-      GETRESPONSE_LIST_TOKEN: ${{ secrets.GETRESPONSE_LIST_TOKEN }}
-      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
-      OAUTH_SERVER_URL: ${{ secrets.OAUTH_SERVER_URL }}
-      VITE_OAUTH_PORTAL_URL: ${{ secrets.VITE_OAUTH_PORTAL_URL }}
-      VITE_APP_ID: ${{ secrets.VITE_APP_ID }}
-      OWNER_OPEN_ID: ${{ secrets.OWNER_OPEN_ID }}
-      BUILT_IN_FORGE_API_URL: ${{ secrets.BUILT_IN_FORGE_API_URL }}
-      BUILT_IN_FORGE_API_KEY: ${{ secrets.BUILT_IN_FORGE_API_KEY }}
-      SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-    
+  dispatch:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Trigger Master Controller
+        uses: peter-evans/repository-dispatch@v3
         with:
-          node-version: '22'
-      
-      - name: Install pnpm
-        run: npm install -g pnpm@10.4.1
-      
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      
-      - name: Build application
-        run: pnpm run build
-      
-      - name: Copy files to deployment directory
-        run: |
-          # Define target directory
-          TARGET_DIR="/home/ubuntu/book-epc-hampshire"
-          
-          # Ensure target directory exists
-          mkdir -p $TARGET_DIR
-          
-          # Clean up old build artifacts
-          rm -rf $TARGET_DIR/dist
-          rm -rf $TARGET_DIR/node_modules
-          
-          # Copy new build artifacts
-          cp -r dist $TARGET_DIR/
-          cp package.json $TARGET_DIR/
-          cp -r node_modules $TARGET_DIR/
-          cp -r server $TARGET_DIR/ || true
-          cp -r shared $TARGET_DIR/ || true
-      
-      - name: Create/Update .env file
-        run: |
-          TARGET_DIR="/home/ubuntu/book-epc-hampshire"
-          tee $TARGET_DIR/.env > /dev/null <<EOF
-          NODE_ENV=production
-          PORT=3009
-          DATABASE_URL=${{ secrets.DATABASE_URL }}
-          JWT_SECRET=${{ secrets.JWT_SECRET }}
-          GETRESPONSE_API_KEY=${{ secrets.GETRESPONSE_API_KEY }}
-          GETRESPONSE_LIST_TOKEN=${{ secrets.GETRESPONSE_LIST_TOKEN }}
-          STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
-          STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
-          OAUTH_SERVER_URL=${{ secrets.OAUTH_SERVER_URL }}
-          VITE_OAUTH_PORTAL_URL=${{ secrets.VITE_OAUTH_PORTAL_URL }}
-          VITE_APP_ID=${{ secrets.VITE_APP_ID }}
-          OWNER_OPEN_ID=${{ secrets.OWNER_OPEN_ID }}
-          BUILT_IN_FORGE_API_URL=${{ secrets.BUILT_IN_FORGE_API_URL }}
-          BUILT_IN_FORGE_API_KEY=${{ secrets.BUILT_IN_FORGE_API_KEY }}
-          SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
-          EOF
-      
-      - name: Restart PM2
-        run: |
-          cd /home/ubuntu/book-epc-hampshire
-          # Ensure PM2 is in path
-          export PATH=$PATH:/home/ubuntu/.nvm/versions/node/v22.13.0/bin
-          
-          # Restart the process
-          pm2 restart book-epc-hampshire || pm2 start npm --name "book-epc-hampshire" -- run start
-          pm2 save
+          token: ${{ secrets.ZERO_TOUCH_FLEET_MASTER }}
+          repository: blackcrowmarketing/black-crow-media
+          event-type: deploy_site
+          client-payload: '{"site": "book-epc-hampshire"}'
