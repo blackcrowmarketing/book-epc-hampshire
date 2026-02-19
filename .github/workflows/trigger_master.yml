@@ -1,0 +1,16 @@
+name: Ring the Doorbell (Trigger Master)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  notify-master:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔔 Wake up Master Controller
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GH_PAT }}
+          repository: blackcrowmarketing/black-crow-media
+          event-type: trigger-deployment

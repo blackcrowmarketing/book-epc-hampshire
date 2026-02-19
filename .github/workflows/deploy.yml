@@ -1,0 +1,17 @@
+name: Trigger Fleet Deployment
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Master Controller
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.ZERO_TOUCH_FLEET_MASTER }}
+          repository: blackcrowmarketing/black-crow-media
+          event-type: deploy_site
+          client-payload: '{"site": "book-epc-hampshire"}'
