@@ -408,7 +408,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
               <h2 className="text-3xl md:text-3xl font-heading font-bold mb-6">Book Your Hampshire EPC Assessment</h2>
-              <p className="text-primary-foreground/80 text-lg mb-8">
+              <p className="text-primary-foreground/80 text-lg mb-8" data-nosnippet>
                 Ready to book your EPC assessment or have a question? Fill out the form or contact me directly using the details below.
               </p>
               
