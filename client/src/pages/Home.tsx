@@ -75,7 +75,7 @@ export default function Home() {
       <section id="home" className="relative bg-secondary overflow-hidden pb-2">
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[600px] py-12">
-            <div className="space-y-8 animate-in slide-in-from-left-10 duration-700">
+            <div className="space-y-8">
               <style>{`
                 @keyframes pulse-glow {
                   0%, 100% { box-shadow: 0 0 0 0 rgba(118, 184, 42, 0.7); }
@@ -110,7 +110,7 @@ export default function Home() {
 
             </div>
             
-            <div className="relative h-full min-h-[400px] lg:min-h-[600px] animate-in slide-in-from-right-10 duration-700 delay-200">
+            <div className="relative h-full min-h-[400px] lg:min-h-[600px]">
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-3xl transform rotate-3"></div>
               <img 
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663287236462/EzpRoLIIRsOkQHpr.jpg" 
@@ -119,7 +119,7 @@ export default function Home() {
               />
               
               {/* Elmhurst Energy Badge */}
-              <div className="absolute -bottom-6 -left-6 bg-white p-2 rounded-xl shadow-xl border border-border animate-in fade-in zoom-in duration-1000 delay-500">
+              <div className="absolute -bottom-6 -left-6 bg-white p-2 rounded-xl shadow-xl border border-border">
                 <img 
                   src="/elmhurst-approved.webp" 
                   alt="Elmhurst Energy Approved Energy Assessor" 
