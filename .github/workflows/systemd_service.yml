@@ -26,29 +26,33 @@ jobs:
           echo "Node Path: $NODE_PATH"
           
           # Create the service file content
-          sudo bash -c "cat <<EOF > /etc/systemd/system/\$SERVICE_NAME.service
+          # We use a temporary file first to avoid sudo redirection issues
+          cat <<EOF > /tmp/${SERVICE_NAME}.service
           [Unit]
           Description=Book EPC Hampshire Node App
           After=network.target
           
           [Service]
-          User=\$USER
-          WorkingDirectory=\$APP_DIR
+          User=$USER
+          WorkingDirectory=$APP_DIR
           Environment=NODE_ENV=production
-          Environment=PORT=\$PORT
-          ExecStart=\$NODE_PATH dist/index.js
+          Environment=PORT=$PORT
+          ExecStart=$NODE_PATH dist/index.js
           Restart=always
           RestartSec=10
           
           [Install]
           WantedBy=multi-user.target
-          EOF"
+          EOF
+          
+          # Move to systemd directory
+          sudo mv /tmp/${SERVICE_NAME}.service /etc/systemd/system/${SERVICE_NAME}.service
           
           # Reload Systemd
           sudo systemctl daemon-reload
           
           # Enable the service
-          sudo systemctl enable \$SERVICE_NAME
+          sudo systemctl enable ${SERVICE_NAME}
 
       - name: Stop Old Processes (PM2/Zombie)
         run: |
