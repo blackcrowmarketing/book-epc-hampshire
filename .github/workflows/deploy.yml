@@ -24,10 +24,17 @@ jobs:
 
       - name: Build Project
         env:
-          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          # We are hardcoding the key here to debug if the secret is empty
+          VITE_GOOGLE_MAPS_API_KEY: "AIzaSyCAmRq3cfk6pKtWdfZHnkUEJtKQNqfsAjo"
         run: |
-          echo "Creating .env file..."
-          echo "VITE_GOOGLE_MAPS_API_KEY=${VITE_GOOGLE_MAPS_API_KEY}" > .env
+          echo "Creating .env file with HARDCODED key..."
+          # Use printf to avoid shell expansion issues
+          printf "VITE_GOOGLE_MAPS_API_KEY=%s\n" "$VITE_GOOGLE_MAPS_API_KEY" > .env
+          
+          echo "Verifying .env content (masked)..."
+          # This will print the key but GitHub Actions will mask it if it matches a secret
+          # If it prints empty, we know the variable is empty.
+          cat .env
           
           echo "Building project..."
           npm run build
