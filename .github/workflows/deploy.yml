@@ -20,7 +20,7 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Installing dependencies..."
-          npm install
+          npm install --legacy-peer-deps
 
       - name: Build Project
         env:
@@ -48,7 +48,7 @@ jobs:
           # Install production dependencies directly in the target directory
           echo "Installing production dependencies in /var/www/book-epc-hampshire..."
           cd /var/www/book-epc-hampshire
-          sudo npm install --production
+          sudo npm install --production --legacy-peer-deps
 
       - name: Restart Systemd Service
         run: |
