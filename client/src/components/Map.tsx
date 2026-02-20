@@ -168,5 +168,4 @@ export function MapView({
     <div ref={mapContainer} className={cn("w-full h-[500px]", className)} />
   );
 }
-# Trigger deployment with new API key
-// Rebuild with .env file approach
+
