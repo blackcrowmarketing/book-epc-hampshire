@@ -1,17 +1,64 @@
-name: Trigger Fleet Deployment
+name: Deploy to Production
 
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  dispatch:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted
     steps:
-      - name: Trigger Master Controller
-        uses: peter-evans/repository-dispatch@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          token: ${{ secrets.ZERO_TOUCH_FLEET_MASTER }}
-          repository: blackcrowmarketing/black-crow-media
-          event-type: deploy_site
-          client-payload: '{"site": "book-epc-hampshire"}'
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          echo "Installing dependencies..."
+          npm install
+
+      - name: Build Project
+        run: |
+          echo "Building project..."
+          npm run build
+
+      - name: Deploy to Server
+        run: |
+          echo "Deploying to /var/www/book-epc-hampshire..."
+          
+          # Create directory if it doesn't exist
+          sudo mkdir -p /var/www/book-epc-hampshire
+          
+          # Clean up old build artifacts
+          sudo rm -rf /var/www/book-epc-hampshire/dist
+          
+          # Copy new build using rsync
+          sudo rsync -av --exclude='node_modules' --exclude='.git' ./ /var/www/book-epc-hampshire/
+          
+          # Fix permissions
+          sudo chown -R root:root /var/www/book-epc-hampshire
+          
+          # Install production dependencies directly in the target directory
+          echo "Installing production dependencies in /var/www/book-epc-hampshire..."
+          cd /var/www/book-epc-hampshire
+          sudo npm install --production
+
+      - name: Restart Systemd Service
+        run: |
+          echo "Restarting Systemd Service..."
+          
+          # Reload daemon to pick up any changes (just in case)
+          sudo systemctl daemon-reload
+          
+          # Restart the service
+          sudo systemctl restart book-epc-hampshire
+          
+          # Check status
+          sudo systemctl status book-epc-hampshire --no-pager
+          
+          echo "Deployment Complete. Service is running."
