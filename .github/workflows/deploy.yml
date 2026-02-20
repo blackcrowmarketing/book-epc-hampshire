@@ -33,6 +33,12 @@ jobs:
         run: |
           echo "Deploying to /var/www/book-epc-hampshire..."
           
+          # Install rsync if missing
+          if ! command -v rsync &> /dev/null; then
+              echo "rsync could not be found, installing..."
+              sudo apt-get update && sudo apt-get install -y rsync
+          fi
+          
           # Create directory if it doesn't exist
           sudo mkdir -p /var/www/book-epc-hampshire
           
