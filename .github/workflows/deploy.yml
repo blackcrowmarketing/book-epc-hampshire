@@ -48,13 +48,16 @@ jobs:
           # Copy new build using rsync
           sudo rsync -av --exclude='node_modules' --exclude='.git' ./ /var/www/book-epc-hampshire/
           
-          # Fix permissions
-          sudo chown -R root:root /var/www/book-epc-hampshire
+          # Fix permissions: Change ownership to the current user ($USER)
+          # This allows npm install to run without sudo
+          sudo chown -R $USER:$USER /var/www/book-epc-hampshire
           
           # Install production dependencies directly in the target directory
           echo "Installing production dependencies in /var/www/book-epc-hampshire..."
           cd /var/www/book-epc-hampshire
-          sudo npm install --production --legacy-peer-deps
+          
+          # Run npm install WITHOUT sudo (since we own the directory now)
+          npm install --production --legacy-peer-deps
 
       - name: Restart Systemd Service
         run: |
