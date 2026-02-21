@@ -88,7 +88,8 @@ declare global {
 
 // Use direct Google Maps API key from environment variable
 // API key is injected during build process by fleet_deploy.yml
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+// Hardcoded for debugging purposes to ensure it's not an injection issue
+const API_KEY = "AIzaSyCAmRq3cfk6pKtWdfZHnkUEJtKQNqfsAjo";
 
 function loadMapScript() {
   return new Promise((resolve, reject) => {
