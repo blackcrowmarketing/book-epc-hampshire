@@ -5,6 +5,10 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: self-hosted
@@ -27,17 +31,13 @@ jobs:
           # We are hardcoding the key here to debug if the secret is empty
           VITE_GOOGLE_MAPS_API_KEY: "AIzaSyCAmRq3cfk6pKtWdfZHnkUEJtKQNqfsAjo"
         run: |
-          echo "Creating .env file with HARDCODED key..."
-          # Use printf to avoid shell expansion issues
-          printf "VITE_GOOGLE_MAPS_API_KEY=%s\n" "$VITE_GOOGLE_MAPS_API_KEY" > .env
+          echo "Building project with DIRECT environment variable injection..."
           
-          echo "Verifying .env content (masked)..."
-          # This will print the key but GitHub Actions will mask it if it matches a secret
-          # If it prints empty, we know the variable is empty.
-          cat .env
+          # We export the variable directly to the shell environment
+          export VITE_GOOGLE_MAPS_API_KEY="$VITE_GOOGLE_MAPS_API_KEY"
           
-          echo "Building project..."
-          npm run build
+          # We also pass it explicitly to the npm run build command just to be absolutely sure
+          VITE_GOOGLE_MAPS_API_KEY="$VITE_GOOGLE_MAPS_API_KEY" npm run build
 
       - name: Deploy to Server
         run: |
