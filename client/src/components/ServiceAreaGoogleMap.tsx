@@ -39,7 +39,7 @@ export default function ServiceAreaGoogleMap() {
     // Polygon removed - keeping map clean
 
     // Add Southampton city center marker
-    new window.google.maps.marker.AdvancedMarkerElement({
+    new window.google.maps.Marker({
       map: map,
       position: { lat: 50.9097, lng: -1.4044 },
       title: 'Southampton City Center',
@@ -54,7 +54,7 @@ export default function ServiceAreaGoogleMap() {
     ];
 
     referenceMarkers.forEach((marker) => {
-      new window.google.maps.marker.AdvancedMarkerElement({
+      new window.google.maps.Marker({
         map: map,
         position: marker.position,
         title: marker.title,

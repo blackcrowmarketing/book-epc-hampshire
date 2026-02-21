@@ -150,7 +150,7 @@ export function MapView({
         fullscreenControl: true,
         zoomControl: true,
         streetViewControl: true,
-        mapId: "DEMO_MAP_ID",
+        // mapId: "DEMO_MAP_ID", // Removed to use standard map rendering
       });
       if (onMapReady) {
         onMapReady(map.current);
